@@ -1,0 +1,1116 @@
+@import url('https://fonts.googleapis.com/css2?family=Beaufort+for+LOL:wght@400;700&family=Spiegel:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/* ─── DESIGN TOKENS ──────────────────────────────────────────── */
+:root {
+  /* Core palette – exact LoL client values */
+  --lol-bg:         #010a13;
+  --lol-bg2:        #0a1428;
+  --lol-bg3:        #091428;
+  --lol-panel:      #0d1b2e;
+  --lol-panel2:     #122034;
+
+  --lol-gold-1:     #c89b3c;
+  --lol-gold-2:     #f0e6d3;
+  --lol-gold-3:     #785a28;
+  --lol-gold-4:     #463714;
+  --lol-gold-dim:   rgba(200,155,60,0.12);
+  --lol-gold-glow:  rgba(200,155,60,0.35);
+
+  --lol-blue:       #0bc4e3;
+  --lol-blue-dim:   rgba(11,196,227,0.08);
+  --lol-blue-mid:   #1e3a5f;
+
+  --lol-text:       #a09b8c;
+  --lol-text-light: #c8aa6e;
+  --lol-text-bright:#f0e6d3;
+  --lol-muted:      #5b5a56;
+
+  --lol-red:        #c0392b;
+  --lol-green:      #1e8449;
+
+  /* Shadows & glows */
+  --shadow-gold:    0 0 20px rgba(200,155,60,0.4), 0 0 60px rgba(200,155,60,0.1);
+  --shadow-blue:    0 0 20px rgba(11,196,227,0.3);
+  --shadow-panel:   0 4px 30px rgba(0,0,0,0.8);
+}
+
+/* ─── RESET ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--lol-bg);
+  color: var(--lol-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(200,155,60,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 100% 100%, rgba(11,196,227,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── NAVBAR ─────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 52px;
+  background: linear-gradient(180deg, #0a1428 0%, #071020 100%);
+  border-bottom: 1px solid var(--lol-gold-3);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 1px 0 rgba(200,155,60,0.2);
+}
+
+.nav::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--lol-gold-1) 30%, var(--lol-gold-1) 70%, transparent 100%);
+  opacity: 0.5;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  height: 100%;
+  color: var(--lol-gold-1);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border-right: 1px solid var(--lol-gold-4);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.logo:hover {
+  color: var(--lol-gold-2);
+  text-shadow: var(--shadow-gold);
+  background: rgba(200,155,60,0.05);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  padding: 0 12px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+  color: var(--lol-text);
+  text-decoration: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--lol-gold-2);
+  border-bottom-color: var(--lol-gold-1);
+}
+
+.nav-link.active {
+  color: var(--lol-gold-1);
+  border-bottom-color: var(--lol-gold-1);
+}
+
+.nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 0;
+  border-left: 1px solid var(--lol-gold-4);
+}
+
+.cartBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  padding: 0 24px;
+  background: transparent;
+  color: var(--lol-gold-1);
+  text-decoration: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.cartBtn:hover {
+  background: var(--lol-gold-dim);
+  border-bottom-color: var(--lol-gold-1);
+  color: var(--lol-gold-2);
+}
+
+.cart-badge {
+  background: var(--lol-gold-1);
+  color: var(--lol-bg);
+  font-size: 10px;
+  font-weight: 900;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* ─── SHOP LAYOUT ────────────────────────────────────────────── */
+.shopLayout {
+  display: flex;
+  min-height: calc(100vh - 52px);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── SIDEBAR ────────────────────────────────────────────────── */
+.sidebar {
+  width: 210px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #0a1428 0%, #071020 100%);
+  border-right: 1px solid var(--lol-gold-4);
+  position: sticky;
+  top: 52px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--lol-gold-4); }
+
+.sidebarTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--lol-gold-3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid var(--lol-gold-4);
+  margin-bottom: 4px;
+}
+
+.filterList { list-style: none; }
+.filterList li { margin: 0; }
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  color: var(--lol-muted);
+  cursor: pointer;
+  font-family: 'Rajdhani', sans-serif;
+  text-align: left;
+  transition: all 0.12s;
+}
+
+.filterItem:hover {
+  color: var(--lol-text-light);
+  background: rgba(200,155,60,0.05);
+  border-left-color: var(--lol-gold-3);
+}
+
+.filterItem.active {
+  color: var(--lol-gold-1);
+  background: linear-gradient(90deg, rgba(200,155,60,0.12) 0%, transparent 100%);
+  border-left-color: var(--lol-gold-1);
+}
+
+.filterDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  opacity: 0.5;
+  margin-top: 3px;
+  align-self: flex-start;
+}
+.filterItem.active .filterDot { opacity: 1; box-shadow: 0 0 4px var(--lol-gold-1); }
+
+.filterLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.filterDesc {
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0.3px !important;
+  color: var(--lol-muted);
+  line-height: 1.2;
+}
+.filterItem.active .filterDesc { color: var(--lol-gold-3); }
+
+.filterCount {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--lol-muted);
+  align-self: flex-start;
+  margin-top: 1px;
+  font-family: 'Rajdhani', sans-serif;
+}
+.filterItem.active .filterCount { color: var(--lol-gold-3); }
+
+.filterSeparator {
+  height: 1px;
+  background: var(--lol-gold-4);
+  margin: 6px 16px;
+  opacity: 0.5;
+}
+
+/* ─── SHOP MAIN ──────────────────────────────────────────────── */
+.shopMain { flex: 1; padding: 28px 28px; min-width: 0; }
+
+.hero {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--lol-gold-4);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hero h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--lol-gold-1);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.heroRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero input {
+  width: 300px;
+  padding: 8px 14px;
+  background: var(--lol-panel);
+  border: 1px solid var(--lol-gold-4);
+  border-radius: 0;
+  color: var(--lol-text-bright);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.hero input:focus {
+  border-color: var(--lol-gold-1);
+  box-shadow: 0 0 10px rgba(200,155,60,0.2);
+}
+
+.hero input::placeholder { color: var(--lol-muted); font-style: italic; }
+
+.resultsCount {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--lol-muted);
+}
+
+/* ─── ITEM GRID ──────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+/* ─── ITEM CARD ──────────────────────────────────────────────── */
+.card {
+  background: linear-gradient(145deg, #0d1b2e 0%, #091428 100%);
+  border: 1px solid var(--lol-gold-4);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  /* Hextech corner cuts */
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,155,60,0.06) 0%, transparent 40%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lol-gold-1), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--lol-gold-1);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6), var(--shadow-gold);
+}
+
+.card:hover::before { opacity: 1; }
+.card:hover::after  { opacity: 0.6; }
+
+.card a { display: block; position: relative; z-index: 2; }
+
+.card img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  background: radial-gradient(ellipse at center, rgba(200,155,60,0.08) 0%, rgba(0,0,0,0.4) 100%);
+  padding: 10px;
+  transition: transform 0.25s;
+}
+
+.card:hover img { transform: scale(1.1); }
+
+.cardContent {
+  padding: 10px;
+  border-top: 1px solid var(--lol-gold-4);
+  position: relative;
+  z-index: 2;
+  background: rgba(0,0,0,0.2);
+}
+
+.cardContent h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--lol-text-bright);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.cardContent p {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lol-gold-1);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.cardContent button {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid var(--lol-gold-3);
+  background: var(--lol-gold-dim);
+  color: var(--lol-gold-1);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+}
+
+.cardContent button:hover {
+  background: rgba(200,155,60,0.2);
+  border-color: var(--lol-gold-1);
+  color: var(--lol-gold-2);
+  box-shadow: 0 0 10px rgba(200,155,60,0.3);
+}
+
+/* ─── PAGE WRAPPER ───────────────────────────────────────────── */
+.page {
+  padding: 32px 36px;
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+}
+
+.page h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--lol-gold-1);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--lol-gold-4);
+}
+
+/* ─── CART PAGE ──────────────────────────────────────────────── */
+.cartItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, var(--lol-panel) 0%, rgba(13,27,46,0.6) 100%);
+  border: 1px solid var(--lol-gold-4);
+  border-left: 2px solid var(--lol-gold-1);
+  margin-bottom: 8px;
+  transition: all 0.15s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.cartItem:hover {
+  border-color: var(--lol-gold-1);
+  box-shadow: var(--shadow-gold);
+}
+
+.cartItem img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border: 1px solid var(--lol-gold-4);
+  background: radial-gradient(ellipse, rgba(200,155,60,0.1) 0%, transparent 70%);
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.cartItem h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--lol-text-bright);
+  margin-bottom: 2px;
+}
+
+.cartItem p {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--lol-gold-1);
+  letter-spacing: 0.5px;
+}
+
+.cartItem button {
+  margin-left: auto;
+  padding: 5px 14px;
+  background: transparent;
+  border: 1px solid rgba(192,57,43,0.5);
+  color: #e74c3c;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.cartItem button:hover {
+  background: rgba(192,57,43,0.15);
+  border-color: #e74c3c;
+  box-shadow: 0 0 10px rgba(231,76,60,0.3);
+}
+
+.page h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  color: var(--lol-gold-2);
+  letter-spacing: 2px;
+  margin-top: 20px;
+  margin-bottom: 4px;
+}
+
+.clearBtn {
+  margin-top: 10px;
+  padding: 9px 24px;
+  background: transparent;
+  border: 1px solid rgba(192,57,43,0.6);
+  color: #e74c3c;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+.clearBtn:hover {
+  background: rgba(192,57,43,0.15);
+  box-shadow: 0 0 16px rgba(192,57,43,0.3);
+}
+
+/* ─── DETAIL PAGE ────────────────────────────────────────────── */
+.detail { max-width: 900px; }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--lol-muted);
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--lol-gold-1); }
+
+.detail-card {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #0d1b2e 0%, #091428 100%);
+  border: 1px solid var(--lol-gold-3);
+  padding: 32px;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  box-shadow: var(--shadow-panel), inset 0 0 60px rgba(200,155,60,0.03);
+}
+
+.detail-image-wrap {
+  flex-shrink: 0;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse, rgba(200,155,60,0.15) 0%, transparent 70%);
+  border: 1px solid var(--lol-gold-4);
+  position: relative;
+}
+
+.detail-image-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, var(--lol-gold-1), transparent 50%, var(--lol-gold-1));
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.detail-image-wrap img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(200,155,60,0.5));
+}
+
+.detail-info { flex: 1; }
+
+.detail-info h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: var(--lol-gold-1);
+  letter-spacing: 2px;
+  margin: 0 0 10px;
+  padding: 0;
+  border: none;
+  text-shadow: 0 0 20px rgba(200,155,60,0.3);
+}
+
+.detail-price {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--lol-gold-2);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gold-coin { color: var(--lol-gold-1); font-size: 12px; }
+
+.detail-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+
+.tag {
+  padding: 2px 10px;
+  background: rgba(11,196,227,0.08);
+  border: 1px solid rgba(11,196,227,0.25);
+  color: var(--lol-blue);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ─── ITEM DESCRIPTION ───────────────────────────────────────── */
+.desc-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  background: rgba(200,155,60,0.05);
+  border-left: 2px solid var(--lol-gold-1);
+}
+
+.desc-stat-line {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lol-gold-2);
+  letter-spacing: 0.3px;
+}
+
+.desc-body { margin-bottom: 18px; display: flex; flex-direction: column; gap: 5px; }
+
+.desc-line {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--lol-text);
+}
+
+.desc-keyword { color: var(--lol-gold-1); font-weight: 700; letter-spacing: 0.3px; }
+.desc-attention { color: var(--lol-text-bright); font-weight: 700; }
+
+.detail-btn {
+  padding: 10px 28px;
+  background: var(--lol-gold-dim);
+  border: 1px solid var(--lol-gold-1);
+  color: var(--lol-gold-1);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.detail-btn:hover {
+  background: rgba(200,155,60,0.2);
+  color: var(--lol-gold-2);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-1px);
+}
+
+.muted-text { color: var(--lol-muted); font-style: italic; }
+
+/* ─── BUILD PLANER ───────────────────────────────────────────── */
+.build-page {
+  padding: 32px 36px;
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 52px);
+}
+
+.build-header {
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--lol-gold-4);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.build-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--lol-gold-1);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.build-header p {
+  font-size: 12px;
+  color: var(--lol-muted);
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.build-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ─── SLOT GRID ──────────────────────────────────────────────── */
+.slots-section { }
+
+.slots-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--lol-gold-3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.slot {
+  aspect-ratio: 1;
+  background: linear-gradient(145deg, #0d1b2e, #071020);
+  border: 1px solid var(--lol-gold-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: default;
+  transition: all 0.2s;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  overflow: hidden;
+}
+
+.slot.empty {
+  border-style: dashed;
+  border-color: var(--lol-blue-mid);
+}
+
+.slot.empty::after {
+  content: '+';
+  font-size: 24px;
+  color: var(--lol-blue-mid);
+  font-weight: 300;
+}
+
+.slot.filled {
+  border-color: var(--lol-gold-3);
+  background: radial-gradient(ellipse at center, rgba(200,155,60,0.1) 0%, #0d1b2e 70%);
+}
+
+.slot.filled:hover {
+  border-color: var(--lol-red);
+  box-shadow: 0 0 14px rgba(192,57,43,0.4);
+}
+
+.slot.filled:hover .slot-remove { opacity: 1; }
+
+.slot img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(200,155,60,0.3));
+}
+
+.slot-remove {
+  position: absolute;
+  inset: 0;
+  background: rgba(192,57,43,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  font-weight: 700;
+}
+
+/* ─── BUILD STATS PANEL ──────────────────────────────────────── */
+.build-panel {
+  background: linear-gradient(145deg, #0d1b2e 0%, #071020 100%);
+  border: 1px solid var(--lol-gold-4);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  overflow: hidden;
+}
+
+.build-panel-header {
+  background: linear-gradient(90deg, rgba(200,155,60,0.1) 0%, transparent 100%);
+  border-bottom: 1px solid var(--lol-gold-4);
+  padding: 12px 16px;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--lol-gold-1);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.build-total-gold {
+  color: var(--lol-gold-2);
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.build-stats-body { padding: 16px; }
+
+.build-stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(200,155,60,0.08);
+}
+
+.build-stat:last-child { border-bottom: none; }
+
+.build-stat-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--lol-text);
+}
+
+.build-stat-bar-wrap {
+  flex: 1;
+  margin: 0 10px;
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.build-stat-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lol-gold-3), var(--lol-gold-1));
+  transition: width 0.4s ease;
+}
+
+.build-stat-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--lol-gold-1);
+  min-width: 40px;
+  text-align: right;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.build-empty-msg {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--lol-muted);
+  font-size: 12px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  line-height: 1.8;
+}
+
+/* Item-Suche im Build-Planer */
+.build-search-section { }
+
+.build-search-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--lol-gold-3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.build-search-input {
+  width: 100%;
+  padding: 8px 14px;
+  background: var(--lol-panel);
+  border: 1px solid var(--lol-gold-4);
+  color: var(--lol-text-bright);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 12px;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+.build-search-input:focus {
+  border-color: var(--lol-gold-1);
+  box-shadow: 0 0 10px rgba(200,155,60,0.15);
+}
+
+.build-search-input::placeholder { color: var(--lol-muted); font-style: italic; }
+
+.build-item-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 6px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.build-item-list::-webkit-scrollbar { width: 3px; }
+.build-item-list::-webkit-scrollbar-track { background: transparent; }
+.build-item-list::-webkit-scrollbar-thumb { background: var(--lol-gold-4); }
+
+.build-item-thumb {
+  aspect-ratio: 1;
+  background: var(--lol-panel);
+  border: 1px solid var(--lol-gold-4);
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.15s;
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+}
+
+.build-item-thumb:hover {
+  border-color: var(--lol-gold-1);
+  box-shadow: 0 0 10px rgba(200,155,60,0.3);
+  transform: scale(1.06);
+}
+
+.build-item-thumb.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.build-item-thumb img { width: 85%; height: 85%; object-fit: contain; }
+
+.build-item-tooltip {
+  position: absolute;
+  bottom: 105%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0a1428;
+  border: 1px solid var(--lol-gold-3);
+  padding: 4px 8px;
+  font-size: 10px;
+  color: var(--lol-gold-2);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.build-item-thumb:hover .build-item-tooltip { opacity: 1; }
+
+.build-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.build-btn {
+  flex: 1;
+  padding: 9px;
+  border: 1px solid var(--lol-gold-3);
+  background: var(--lol-gold-dim);
+  color: var(--lol-gold-1);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+}
+
+.build-btn:hover {
+  background: rgba(200,155,60,0.2);
+  border-color: var(--lol-gold-1);
+  box-shadow: 0 0 12px rgba(200,155,60,0.25);
+}
+
+.build-btn.danger {
+  border-color: rgba(192,57,43,0.5);
+  background: transparent;
+  color: #e74c3c;
+}
+
+.build-btn.danger:hover {
+  background: rgba(192,57,43,0.15);
+  border-color: #e74c3c;
+  box-shadow: 0 0 12px rgba(231,76,60,0.25);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .build-layout { grid-template-columns: 1fr; }
+  .slots-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .shopLayout { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--lol-gold-4); }
+  .shopMain { padding: 16px; }
+  .hero input { width: 100%; }
+  .detail-card { flex-direction: column; padding: 20px; }
+  .nav { padding: 0; }
+  .build-page { padding: 16px; }
+}
