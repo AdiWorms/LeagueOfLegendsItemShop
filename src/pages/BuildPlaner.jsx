@@ -10,7 +10,7 @@ const STAT_CONFIG = [
   { key: "FlatMagicDamageMod",       label: "Ability Power",    max: 200 },
   { key: "FlatHPPoolMod",            label: "Health",           max: 1200 },
   { key: "FlatMPPoolMod",            label: "Mana",             max: 1000 },
-  { key: "FlatArmorMod",             label: "Armor",            max: 100  },
+  { key: "FlatArmorMod",             label: "Armor",            max: 100  },                                        //------------------------
   { key: "FlatSpellBlockMod",        label: "Magic Resist",     max: 100  },
   { key: "FlatCritChanceMod",        label: "Crit Chance",      max: 1,   percent: true },
   { key: "FlatMovementSpeedMod",     label: "Move Speed",       max: 60   },
@@ -35,7 +35,7 @@ function BuildPlaner() {
       try {
         const v = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
         const versions = await v.json();
-        const version = versions[0];
+        const version = versions[0]; //erste version (index 0)
 
         const res = await fetch(
           `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/item.json`
@@ -49,7 +49,7 @@ function BuildPlaner() {
           price: item.gold?.total ?? 0,
           purchasable: item.gold?.purchasable ?? true,
           tags: item.tags ?? [],
-          stats: item.stats ?? {},
+          stats: item.stats ?? {},                                                                     //------------------------------------------
           requiredChampion: item.requiredChampion ?? null,
           requiredAlly: item.requiredAlly ?? null,
           image: `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`,
