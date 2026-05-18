@@ -34,12 +34,12 @@ function Navbar() {
 
 function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <Navbar />
+    <CartProvider>                                  //Umschließt die gesamte App. Alles was darin liegt hat Zugriff auf den Warenkorb-State
+      <BrowserRouter>                               //Aktiviert das Routing für die gesamte App
+        <Navbar />                                  //Immer Sichtbar  
         <Routes>
           <Route path="/" element={<Shop />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={<CartPage />} />              //Entscheidet sich für eine Route basierend auf die URL 
           <Route path="/item/:id" element={<ItemDetail />} />
           <Route path="/build" element={<BuildPlaner />} />
         </Routes>
