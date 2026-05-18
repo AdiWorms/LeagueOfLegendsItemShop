@@ -101,7 +101,7 @@ function Shop() {
   // activeRole: aktuell ausgewählter Filter → null = alle Items anzeigen
   const [activeRole, setActiveRole] = useState(null);
 
-  // useCart: Context – kein Prop-Drilling nötig, da CartContext global verfügbar ist
+  
   const { addToCart } = useCart();
 
   // === useEffect: Daten laden ===
@@ -125,7 +125,7 @@ function Shop() {
           name: item.name,
           price: item.gold?.total ?? 0,
           purchasable: item.gold?.purchasable ?? true,
-          tags: item.tags ?? [],
+          tags: item.tags ?? [],                                                          //-----------------------------------------------
           requiredChampion: item.requiredChampion ?? null,
           requiredAlly: item.requiredAlly ?? null,
           image: `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`,
