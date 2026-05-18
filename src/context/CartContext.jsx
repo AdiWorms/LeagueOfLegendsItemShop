@@ -22,11 +22,10 @@ export function CartProvider({ children }) { // children: Prop-Drilling ersetzt 
   });
 
   // === useEffect: Warenkorb speichern ===
-  // Wird jedes Mal ausgeführt wenn sich cart ändert (cart im Dependency-Array)
-  // Nebeneffekt: State in localStorage synchronisieren
+ //läuft jedes mal wenn sich cart ändert 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]); // cart als Dependency → läuft bei jeder Änderung von cart
+    localStorage.setItem("cart", JSON.stringify(cart)); //localStorage kann nur strings speichern ----------------------------
+  }, [cart]); 
 
   // === STATE-ÄNDERUNGSFUNKTIONEN ===
   // Alle Funktionen die den State verändern sind hier definiert (wo der State liegt)
@@ -55,7 +54,7 @@ export function CartProvider({ children }) { // children: Prop-Drilling ersetzt 
 
   // Item entfernen
   function removeFromCart(id) {
-    // Array.filter(): Item mit dieser ID aus dem Array herausfiltern
+    // Array.filter(): Item mit dieser ID aus dem Array herausfiltern 
     setCart((prev) => prev.filter(i => i.id !== id));
   }
 
