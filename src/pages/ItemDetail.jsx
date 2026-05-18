@@ -10,10 +10,10 @@ import { useCart } from "../context/CartContext";
 function parseDescription(html) {
   if (!html) return [];
 
-  let str = html.replace(/<br\s*\/?>/gi, "\n");
+  let str = html.replace(/<br\s*\/?>/gi, "\n"); //ersetzt alle vorkommen von br durch einen richtigen zeilenumbruch  ----------------------------
   const blocks = [];
 
-  str = str.replace(/<mainText>([\s\S]*?)<\/mainText>/gi, (_, inner) => {
+  str = str.replace(/<mainText>([\s\S]*?)<\/mainText>/gi, (_, inner) => { 
     // Array.map() + filter(): Stat-Zeilen extrahieren und leere Strings entfernen
     const statMatches = [...inner.matchAll(/<stats>([\s\S]*?)<\/stats>/gi)];
     statMatches.forEach(m => {
@@ -27,14 +27,14 @@ function parseDescription(html) {
     });
 
     let rest = inner.replace(/<stats>[\s\S]*?<\/stats>/gi, "");
-    rest = rest.replace(/<passive>([\s\S]*?)<\/passive>/gi, (_, t) => `%%KEYWORD%%${t.trim()}%%ENDKEYWORD%%`);
-    rest = rest.replace(/<active>([\s\S]*?)<\/active>/gi, (_, t) => `%%KEYWORD%%${t.trim()}%%ENDKEYWORD%%`);
+    rest = rest.replace(/<passive>([\s\S]*?)<\/passive>/gi, (_, t) => `%%KEYWORD%%${t.trim()}%%ENDKEYWORD%%`); 
+    rest = rest.replace(/<active>([\s\S]*?)<\/active>/gi, (_, t) => `%%KEYWORD%%${t.trim()}%%ENDKEYWORD%%`); //riot api-seitige tags werden in eigene platzhalter umgewandelt --------------------
     rest = rest.replace(/<attention>([\s\S]*?)<\/attention>/gi, (_, t) => `%%ATTENTION%%${t.trim()}%%ENDATTENTION%%`);
     rest = rest.replace(/<[^>]+>/g, "");
 
-    const lines = rest.split("\n").map(l => l.trim()).filter(Boolean);
+    const lines = rest.split("\n").map(l => l.trim()).filter(Boolean); 
     lines.forEach(line => {
-      if (line.includes("%%KEYWORD%%") || line.includes("%%ATTENTION%%")) {
+      if (line.includes("%%KEYWORD%%") || line.includes("%%ATTENTION%%")) {                         //zeilen als blöcke speichern -----------------------------------------------------------------
         blocks.push({ type: "ability", raw: line });
       } else {
         blocks.push({ type: "desc", text: line });
